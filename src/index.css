@@ -27,7 +27,7 @@ body {
   background-color: #09090b;
 }
 
-.bg-premium-panel {
+.bg-panel-dark {
   background-color: #131316;
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
@@ -87,8 +87,36 @@ body {
   100% { background-position: 200% 0; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(0.5deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.06); }
+}
+
+@keyframes progressPulse {
+  0% { width: 10%; }
+  50% { width: 70%; }
+  100% { width: 95%; }
+}
+
 .shimmer-bg {
   background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-progress-pulse {
+  animation: progressPulse 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }

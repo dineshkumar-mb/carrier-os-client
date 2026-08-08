@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Loader2, Eye, EyeOff, Mail, Lock, User, ShieldCheck, Cpu, CheckCircle2, Zap, Rocket, Star, ArrowRight } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Mail, Lock, User, ShieldCheck, CheckCircle2, Zap, Rocket, Star, ArrowRight, Server, Info } from 'lucide-react';
 
 import api from '../../services/api';
 import authBg from '../../assets/auth_bg.png';
@@ -12,11 +12,30 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [loadingStep, setLoadingStep] = useState(0);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  // Animated server wake-up loading ticker steps
+  const loadingSteps = [
+    '⚡ Waking up 17-agent runtime kernel on free tier...',
+    '🛡️ Verifying multi-tenant security context...',
+    '🚀 Authenticating candidate workspace & job matches...'
+  ];
+
+  useEffect(() => {
+    let interval: any;
+    if (loading) {
+      setLoadingStep(0);
+      interval = setInterval(() => {
+        setLoadingStep((prev) => (prev + 1) % loadingSteps.length);
+      }, 2500);
+    }
+    return () => clearInterval(interval);
+  }, [loading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +50,7 @@ export default function Login() {
       login(response.data.token, response.data.user);
       navigate('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Authentication failed. Please check your credentials.');
+      setError(err.response?.data?.message || 'Authentication failed. Please check your credentials or allow a few seconds for free tier server to wake up.');
     } finally {
       setLoading(false);
     }
@@ -45,15 +64,15 @@ export default function Login() {
       {/* Dark Ambient Overlay Gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#07080c]/95 via-[#0a0b12]/90 to-[#050609]/95 backdrop-blur-[2px]" />
       
-      {/* Glowing Ambient Background Orbs */}
-      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/15 blur-[140px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-cyan-600/12 blur-[120px] rounded-full pointer-events-none" />
+      {/* Glowing Ambient Animated Background Orbs */}
+      <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/15 blur-[140px] rounded-full pointer-events-none animate-pulse-glow" />
+      <div className="absolute bottom-1/4 right-1/3 w-[500px] h-[500px] bg-cyan-600/12 blur-[120px] rounded-full pointer-events-none animate-pulse-glow" style={{ animationDelay: '2s' }} />
 
       {/* Main Container */}
       <div className="relative z-10 w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
         
-        {/* LEFT COLUMN: Engaging Hero & Free Tier Value Props */}
-        <div className="lg:col-span-7 flex flex-col justify-center gap-6 pr-0 lg:pr-6">
+        {/* LEFT COLUMN: Hero & Free Tier Value Props */}
+        <div className="lg:col-span-7 flex flex-col justify-center gap-6 pr-0 lg:pr-6 animate-float">
           
           {/* Free Tier Highlight Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gradient-to-r from-emerald-500/10 via-indigo-500/10 to-cyan-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold w-fit backdrop-blur-md shadow-lg shadow-emerald-500/10">
@@ -75,10 +94,10 @@ export default function Login() {
           </div>
 
           {/* Social Proof / Live Platform Metrics */}
-          <div className="grid grid-cols-3 gap-3 p-4 bg-[#0e1017]/80 backdrop-blur-xl border border-white/10 rounded-2xl">
+          <div className="grid grid-cols-3 gap-3 p-4 bg-[#0e1017]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl">
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white flex items-center gap-1">
-                14,200+ <Zap className="w-4 h-4 text-amber-400" />
+                14,200+ <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
               </span>
               <span className="text-[11px] text-zinc-400 font-medium">Jobs Scanned Daily</span>
             </div>
@@ -133,8 +152,17 @@ export default function Login() {
         <div className="lg:col-span-5">
           <div className="relative z-10 w-full bg-[#0e1017]/85 backdrop-blur-2xl border border-white/10 p-7 lg:p-8 rounded-2xl shadow-[0_0_60px_rgba(79,70,229,0.22)] transition-all duration-300">
             
-            {/* Free Tier Callout Banner above form */}
-            <div className="bg-gradient-to-r from-emerald-500/15 via-indigo-500/10 to-cyan-500/15 border border-emerald-500/20 rounded-xl p-3 mb-6 flex items-center justify-between">
+            {/* Server Cold-Start Free Tier Information Banner */}
+            <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 mb-5 flex items-start gap-2.5 text-amber-300 text-xs">
+              <Info className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+              <div className="leading-snug">
+                <span className="font-bold text-amber-200">Free Cloud Instance Notice:</span>
+                <span className="text-amber-300/90 ml-1">If idle, the free cloud server takes ~5s to wake up on first click. Thanks for your patience!</span>
+              </div>
+            </div>
+
+            {/* Free Tier Callout Banner */}
+            <div className="bg-gradient-to-r from-emerald-500/15 via-indigo-500/10 to-cyan-500/15 border border-emerald-500/20 rounded-xl p-3 mb-5 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Rocket className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="text-xs font-semibold text-white">Free Starter Plan Active</span>
@@ -145,11 +173,9 @@ export default function Login() {
             </div>
 
             {/* Brand Header */}
-            <div className="flex flex-col items-center mb-6 text-center">
-              <div className="flex items-center gap-2 mb-1">
-                <h2 className="text-xl font-bold tracking-tight text-white">{isLogin ? 'Welcome Back' : 'Create Free Account'}</h2>
-              </div>
-              <p className="text-xs text-zinc-400">
+            <div className="flex flex-col items-center mb-5 text-center">
+              <h2 className="text-xl font-bold tracking-tight text-white">{isLogin ? 'Welcome Back' : 'Create Free Account'}</h2>
+              <p className="text-xs text-zinc-400 mt-0.5">
                 {isLogin ? 'Sign in to access your autonomous career engine' : 'Get instant access to all 17 AI agents for free'}
               </p>
             </div>
@@ -247,6 +273,21 @@ export default function Login() {
                   </div>
                 )}
               </div>
+
+              {/* Animated Server Wake-Up Loading State */}
+              {loading && (
+                <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-3 flex flex-col gap-2 animate-pulse">
+                  <div className="flex items-center justify-between text-xs text-indigo-300 font-medium">
+                    <span className="flex items-center gap-1.5">
+                      <Server className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
+                      {loadingSteps[loadingStep]}
+                    </span>
+                  </div>
+                  <div className="w-full bg-indigo-950/60 rounded-full h-1.5 overflow-hidden">
+                    <div className="bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 h-full animate-progress-pulse" />
+                  </div>
+                </div>
+              )}
               
               <button 
                 type="submit" 
@@ -254,7 +295,10 @@ export default function Login() {
                 className="w-full mt-2 bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-semibold py-2.5 rounded-xl text-xs shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 active:scale-[0.99] transition-all duration-200 flex justify-center items-center gap-2 disabled:opacity-50"
               >
                 {loading ? (
-                  <Loader2 className="w-4 h-4 animate-spin text-white" />
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>Waking Up Server...</span>
+                  </div>
                 ) : (
                   <>
                     <span>{isLogin ? 'Sign In to Carrier OS' : 'Get Started Free'}</span>
@@ -264,14 +308,15 @@ export default function Login() {
               </button>
             </form>
 
-            {/* Footer Trust Badges */}
+            {/* Footer Status & Security Badges */}
             <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] text-zinc-400 font-mono">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Multi-Tenant
               </span>
               <span className="text-zinc-600">•</span>
-              <span className="flex items-center gap-1">
-                <Cpu className="w-3.5 h-3.5 text-indigo-400" /> 17-Agent Engine
+              <span className="flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
+                <span>Free Server Online</span>
               </span>
             </div>
 
