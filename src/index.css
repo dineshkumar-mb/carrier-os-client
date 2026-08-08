@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
@@ -19,92 +21,107 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Light Theme Comprehensive Master Overrides */
-html.light-theme body {
+/* Light Theme (when .dark class is NOT present on html) */
+html:not(.dark) body {
   background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 
-html.light-theme aside,
-html.light-theme header,
-html.light-theme main {
+html:not(.dark) aside {
   background-color: #ffffff !important;
-  border-color: #cbd5e1 !important;
+  border-color: #e2e8f0 !important;
   color: #0f172a !important;
 }
 
-/* Background Panels & Cards in Light Mode */
-html.light-theme .bg-\[\#131316\],
-html.light-theme .bg-\[\#1A1A1A\],
-html.light-theme .bg-\[\#0c0c0e\],
-html.light-theme .bg-\[\#0e1017\],
-html.light-theme .bg-\[\#0a0a0c\],
-html.light-theme .bg-\[\#09090b\],
-html.light-theme .bg-\[\#161824\],
-html.light-theme .bg-\[\#141622\],
-html.light-theme .bg-\[\#242424\],
-html.light-theme .bg-\[\#131316\]\/30,
-html.light-theme .bg-\[\#131316\]\/60,
-html.light-theme .bg-\[\#09090b\]\/80,
-html.light-theme .bg-\[\#09090b\]\/60,
-html.light-theme .bg-\[\#09090b\]\/40,
-html.light-theme .bg-zinc-800,
-html.light-theme .bg-zinc-800\/50,
-html.light-theme .bg-zinc-800\/80,
-html.light-theme .bg-zinc-900,
-html.light-theme .bg-zinc-950,
-html.light-theme .bg-white\/\[0\.02\],
-html.light-theme .bg-white\/\[0\.03\] {
+html:not(.dark) header {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) main {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* All Card Panels in Light Mode */
+html:not(.dark) .bg-\[\#131316\],
+html:not(.dark) .bg-\[\#1A1A1A\],
+html:not(.dark) .bg-\[\#0c0c0e\],
+html:not(.dark) .bg-\[\#0e1017\],
+html:not(.dark) .bg-\[\#0a0a0c\],
+html:not(.dark) .bg-\[\#09090b\],
+html:not(.dark) .bg-\[\#161824\],
+html:not(.dark) .bg-\[\#141622\],
+html:not(.dark) .bg-\[\#242424\],
+html:not(.dark) .bg-\[\#131316\]\/30,
+html:not(.dark) .bg-\[\#131316\]\/60,
+html:not(.dark) .bg-\[\#09090b\]\/80,
+html:not(.dark) .bg-\[\#09090b\]\/60,
+html:not(.dark) .bg-\[\#09090b\]\/40,
+html:not(.dark) .bg-zinc-800,
+html:not(.dark) .bg-zinc-800\/50,
+html:not(.dark) .bg-zinc-800\/80,
+html:not(.dark) .bg-zinc-900,
+html:not(.dark) .bg-zinc-950,
+html:not(.dark) .bg-white\/\[0\.02\],
+html:not(.dark) .bg-white\/\[0\.03\] {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
   color: #0f172a !important;
 }
 
 /* Borders in Light Mode */
-html.light-theme .border-zinc-700,
-html.light-theme .border-zinc-700\/50,
-html.light-theme .border-zinc-800,
-html.light-theme .border-zinc-800\/80,
-html.light-theme .border-zinc-800\/85,
-html.light-theme .border-zinc-850,
-html.light-theme .border-zinc-900,
-html.light-theme .border-zinc-900\/80,
-html.light-theme .border-zinc-950,
-html.light-theme .border-white\/5,
-html.light-theme .border-white\/10 {
+html:not(.dark) .border-zinc-700,
+html:not(.dark) .border-zinc-700\/50,
+html:not(.dark) .border-zinc-800,
+html:not(.dark) .border-zinc-800\/80,
+html:not(.dark) .border-zinc-800\/85,
+html:not(.dark) .border-zinc-850,
+html:not(.dark) .border-zinc-900,
+html:not(.dark) .border-zinc-900\/80,
+html:not(.dark) .border-zinc-950,
+html:not(.dark) .border-white\/5,
+html:not(.dark) .border-white\/10 {
   border-color: #e2e8f0 !important;
 }
 
-/* High-Contrast Text Colors in Light Mode */
-html.light-theme .text-white,
-html.light-theme .text-zinc-100,
-html.light-theme .text-zinc-200 {
+/* Text Hierarchy in Light Mode */
+html:not(.dark) .text-white,
+html:not(.dark) .text-zinc-100,
+html:not(.dark) .text-zinc-200 {
   color: #0f172a !important;
 }
 
-html.light-theme .text-zinc-300,
-html.light-theme .text-zinc-400 {
+html:not(.dark) .text-zinc-300,
+html:not(.dark) .text-zinc-400 {
   color: #334155 !important;
 }
 
-html.light-theme .text-zinc-500,
-html.light-theme .text-zinc-550,
-html.light-theme .text-zinc-600 {
+html:not(.dark) .text-zinc-500,
+html:not(.dark) .text-zinc-550,
+html:not(.dark) .text-zinc-600 {
   color: #64748b !important;
 }
 
-/* Input & Select Controls in Light Mode */
-html.light-theme input,
-html.light-theme select,
-html.light-theme textarea {
-  background-color: #f8fafc !important;
+/* Form Fields in Light Mode */
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea {
+  background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
   color: #0f172a !important;
 }
 
-html.light-theme input::placeholder,
-html.light-theme textarea::placeholder {
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
   color: #94a3b8 !important;
+}
+
+/* Execution Trace Stream Terminal - Sleek Console Style in Light Mode */
+html:not(.dark) .bg-slate-950 {
+  background-color: #0f172a !important;
+  color: #f1f5f9 !important;
 }
 
 /* Premium Layout & Border Classes */
@@ -133,14 +150,17 @@ html.light-theme textarea::placeholder {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #09090b;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #cbd5e1;
   border-radius: 9999px;
 }
+html.dark ::-webkit-scrollbar-thumb {
+  background: #27272a;
+}
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #94a3b8;
 }
 
 /* Ambient glow & Gradients */
