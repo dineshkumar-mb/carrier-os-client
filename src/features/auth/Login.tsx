@@ -117,7 +117,7 @@ export default function Login() {
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
               </div>
-              <span><strong>Multi-Portal Job Discovery</strong> across Greenhouse, Lever, Workday, Naukri & Remote platforms.</span>
+              <span><strong>Multi-Portal Job Discovery</strong> across LinkedIn, Naukri, Apna, Greenhouse, Lever, Workday & 10+ career portals.</span>
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-200">
               <div className="w-5 h-5 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
