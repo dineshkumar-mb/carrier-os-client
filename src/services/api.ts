@@ -1,6 +1,16 @@
 import axios from 'axios';
 
-const RAW_BASE_URL = import.meta.env.VITE_API_URL || 'https://carrier-os-server.vercel.app';
+const getInitialBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://localhost:3000';
+  }
+  return 'https://carrier-os-server.vercel.app';
+};
+
+const RAW_BASE_URL = getInitialBaseUrl();
 export const API_SERVER_URL = RAW_BASE_URL.replace(/\/api\/?$/, '');
 export const API_BASE_URL = `${API_SERVER_URL}/api`;
 
