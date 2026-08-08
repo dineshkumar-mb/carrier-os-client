@@ -38,12 +38,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       setActualTheme(resolved);
 
       if (resolved === 'light') {
+        root.classList.remove('dark');
         root.classList.add('light-theme');
-        root.classList.remove('dark-theme');
         document.body.style.backgroundColor = '#f8fafc';
         document.body.style.color = '#0f172a';
       } else {
-        root.classList.add('dark-theme');
+        root.classList.add('dark');
         root.classList.remove('light-theme');
         document.body.style.backgroundColor = '#09090b';
         document.body.style.color = '#fafafa';

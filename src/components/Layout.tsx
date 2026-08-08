@@ -9,12 +9,12 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string, icon: any, label: 
     className={({ isActive }) =>
       `flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 group ${
         isActive
-          ? 'bg-zinc-800/80 text-white shadow-sm glow-accent border border-zinc-700/50'
-          : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200 border border-transparent'
+          ? 'bg-slate-100 dark:bg-zinc-800/80 text-slate-900 dark:text-white shadow-sm glow-accent border border-slate-300 dark:border-zinc-700/50 font-bold'
+          : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-100 dark:hover:bg-zinc-900 hover:text-slate-900 dark:hover:text-zinc-200 border border-transparent'
       }`
     }
   >
-    <Icon className="w-4.5 h-4.5 mr-3 text-zinc-400 group-hover:text-indigo-400 transition-colors" />
+    <Icon className="w-4.5 h-4.5 mr-3 text-slate-500 dark:text-zinc-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors" />
     {label}
   </NavLink>
 );
@@ -24,18 +24,18 @@ const Layout = () => {
   const { theme, setTheme } = useTheme();
   
   return (
-    <div className="flex h-screen bg-[#09090b] text-zinc-100 overflow-hidden font-sans">
+    <div className="flex h-screen bg-slate-50 dark:bg-[#09090b] text-slate-900 dark:text-zinc-100 overflow-hidden font-sans transition-colors duration-200">
       {/* Sidebar */}
-      <aside className="w-64 flex-shrink-0 border-r border-zinc-900 bg-[#0c0c0e] flex flex-col justify-between">
+      <aside className="w-64 flex-shrink-0 border-r border-slate-200 dark:border-zinc-900 bg-white dark:bg-[#0c0c0e] flex flex-col justify-between transition-colors">
         <div className="flex flex-col flex-1">
           {/* Header Brand */}
-          <div className="h-16 flex items-center px-6 border-b border-zinc-900/80 gap-2">
+          <div className="h-16 flex items-center px-6 border-b border-slate-200 dark:border-zinc-900/80 gap-2">
             <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
               <Sparkles className="w-4.5 h-4.5 text-white animate-pulse" />
             </div>
             <div>
-              <span className="text-sm font-semibold tracking-tight block text-zinc-100 leading-none">Carrier-OS</span>
-              <span className="text-[10px] text-indigo-400 font-medium tracking-wide uppercase">AI Career System</span>
+              <span className="text-sm font-bold tracking-tight block text-slate-900 dark:text-zinc-100 leading-none">Carrier-OS</span>
+              <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-medium tracking-wide uppercase">AI Career System</span>
             </div>
           </div>
           
@@ -50,39 +50,39 @@ const Layout = () => {
         </div>
 
         {/* Footer Account Details */}
-        <div className="p-4 border-t border-zinc-900/80 bg-[#0a0a0c] space-y-1">
+        <div className="p-4 border-t border-slate-200 dark:border-zinc-900/80 bg-slate-50 dark:bg-[#0a0a0c] space-y-1">
           <SidebarItem to="/profile" icon={User} label="Profile" />
           <SidebarItem to="/settings" icon={Settings} label="Settings" />
           
           <button 
             onClick={logout}
-            className="w-full flex items-center px-4 py-3 text-sm font-medium text-zinc-400 hover:bg-zinc-900 hover:text-red-400 rounded-lg transition-all duration-200 mt-1 border border-transparent"
+            className="w-full flex items-center px-4 py-3 text-sm font-medium text-slate-600 dark:text-zinc-400 hover:bg-rose-50 dark:hover:bg-zinc-900 hover:text-rose-600 dark:hover:text-red-400 rounded-lg transition-all duration-200 mt-1 border border-transparent cursor-pointer"
           >
-            <LogOut className="w-4.5 h-4.5 mr-3 text-zinc-500 group-hover:text-red-400" />
+            <LogOut className="w-4.5 h-4.5 mr-3 text-slate-400 dark:text-zinc-500 group-hover:text-rose-600 dark:group-hover:text-red-400" />
             Logout
           </button>
         </div>
       </aside>
 
       {/* Main Content Pane */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#09090b]">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-slate-50 dark:bg-[#09090b]">
         {/* Top Header Navigation */}
-        <header className="h-16 border-b border-zinc-900/80 flex items-center justify-between px-8 bg-[#0c0c0e]/40 backdrop-blur-md">
+        <header className="h-16 border-b border-slate-200 dark:border-zinc-900/80 flex items-center justify-between px-8 bg-white/80 dark:bg-[#0c0c0e]/40 backdrop-blur-md transition-colors">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
-            <span className="text-xs text-zinc-400 font-medium">Copilot Agent Online</span>
+            <span className="text-xs text-slate-600 dark:text-zinc-400 font-semibold">Copilot Agent Online</span>
           </div>
 
           {/* Theme Toggle Button & User Profile */}
           <div className="flex items-center gap-4">
             {/* Theme Toggle Control (Light / Dark / System) */}
-            <div className="flex items-center gap-1 bg-[#141622] border border-white/10 rounded-xl p-1 shadow-sm">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-[#141622] border border-slate-300 dark:border-white/10 rounded-xl p-1 shadow-sm">
               <button
                 type="button"
                 onClick={() => setTheme('light')}
                 title="Light Mode"
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  theme === 'light' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+                  theme === 'light' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Sun className="w-3.5 h-3.5" />
@@ -91,8 +91,8 @@ const Layout = () => {
                 type="button"
                 onClick={() => setTheme('dark')}
                 title="Dark Mode"
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  theme === 'dark' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+                  theme === 'dark' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Moon className="w-3.5 h-3.5" />
@@ -101,8 +101,8 @@ const Layout = () => {
                 type="button"
                 onClick={() => setTheme('system')}
                 title="System Theme"
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  theme === 'system' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+                  theme === 'system' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Monitor className="w-3.5 h-3.5" />
@@ -110,10 +110,10 @@ const Layout = () => {
             </div>
 
             {/* Candidate User Name & Avatar */}
-            <div className="flex items-center gap-3 border-l border-white/10 pl-4">
+            <div className="flex items-center gap-3 border-l border-slate-300 dark:border-white/10 pl-4">
               <div className="text-right">
-                <span className="text-xs font-semibold text-zinc-200 block">{user?.name || 'Candidate'}</span>
-                <span className="text-[10px] text-zinc-500 block leading-none">{user?.email}</span>
+                <span className="text-xs font-bold text-slate-900 dark:text-zinc-200 block">{user?.name || 'Candidate'}</span>
+                <span className="text-[10px] text-slate-500 dark:text-zinc-500 block leading-none">{user?.email}</span>
               </div>
               <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-500 border border-indigo-400/30 flex items-center justify-center text-sm font-bold text-white shadow-md">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}

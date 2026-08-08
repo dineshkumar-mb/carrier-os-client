@@ -85,16 +85,16 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col gap-6">
       {/* Brand & Navigation Header */}
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center bg-[#131316] border border-zinc-800/80 rounded-xl p-4 gap-4">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-[#131316] border border-slate-200 dark:border-zinc-800/80 rounded-xl p-4 gap-4 transition-colors">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30">
-            <Cpu className="w-5 h-5 text-indigo-400" />
+          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 dark:bg-indigo-600/20 flex items-center justify-center border border-indigo-500/30">
+            <Cpu className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              Carrier OS <span className="text-xs px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">v1.0</span>
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+              Carrier OS <span className="text-xs px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 font-mono">v1.0</span>
             </h1>
-            <p className="text-xs text-zinc-400">Autonomous Multi-Agent Career Operating System</p>
+            <p className="text-xs text-slate-600 dark:text-zinc-400">Autonomous Multi-Agent Career Operating System</p>
           </div>
         </div>
 
@@ -104,8 +104,8 @@ const Dashboard = () => {
             onClick={toggleAutonomous}
             className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition border ${
               isAutonomousRunning
-                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
-                : 'bg-zinc-800 text-zinc-300 border-zinc-700 hover:bg-zinc-700'
+                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20'
+                : 'bg-slate-100 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300 border-slate-300 dark:border-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-700'
             }`}
           >
             {isAutonomousRunning ? (
@@ -135,7 +135,7 @@ const Dashboard = () => {
       </header>
 
       {/* Feature Tabs */}
-      <div className="flex gap-2 border-b border-zinc-800 pb-3">
+      <div className="flex gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3">
         {[
           { id: 'overview', label: 'Overview', icon: Briefcase },
           { id: 'approval', label: 'Human Approval', icon: ShieldAlert },
@@ -144,17 +144,19 @@ const Dashboard = () => {
           { id: 'market', label: 'Job Market', icon: TrendingUp }
         ].map(tab => {
           const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as TabType)}
-              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-semibold transition ${
-                activeTab === tab.id
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20'
-                  : 'bg-[#09090b] text-zinc-400 hover:text-white border border-zinc-800/80 hover:border-zinc-700'
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                isActive
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
+                  : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-200 dark:hover:bg-zinc-800/60 hover:text-slate-900 dark:hover:text-zinc-200'
               }`}
             >
-              <Icon className="w-3.5 h-3.5" /> {tab.label}
+              <Icon className="w-3.5 h-3.5" />
+              {tab.label}
             </button>
           );
         })}
@@ -181,55 +183,55 @@ const Dashboard = () => {
 
           {/* Observability & Logs */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <section className="bg-[#131316] border border-zinc-800/80 rounded-xl overflow-hidden shadow-sm flex flex-col h-80 lg:col-span-2">
-              <div className="bg-[#0c0c0e] border-b border-zinc-900/80 px-4 py-3 flex items-center justify-between">
+            <section className="bg-white dark:bg-[#131316] border border-slate-200 dark:border-zinc-800/80 rounded-xl overflow-hidden shadow-sm flex flex-col h-80 lg:col-span-2 transition-colors">
+              <div className="bg-slate-100 dark:bg-[#0c0c0e] border-b border-slate-200 dark:border-zinc-900/80 px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-zinc-400" />
-                  <h3 className="text-sm font-medium text-zinc-200">17-Agent Execution Trace Stream</h3>
+                  <Terminal className="w-4 h-4 text-slate-600 dark:text-zinc-400" />
+                  <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-200">17-Agent Execution Trace Stream</h3>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className={`w-2 h-2 rounded-full ${isAutonomousRunning ? 'bg-emerald-400 animate-pulse' : 'bg-indigo-500'}`}></span>
-                  <span className="text-[10px] text-zinc-400 font-mono">
+                  <span className="text-[10px] text-slate-600 dark:text-zinc-400 font-mono">
                     {isAutonomousRunning ? 'AUTONOMOUS LOOP ACTIVE' : 'LIVE AGENT RUNTIME'}
                   </span>
                 </div>
               </div>
-              <div className="p-4 flex-1 overflow-y-auto font-mono text-xs space-y-2.5 scrollbar-thin bg-black/30">
+              <div className="p-4 flex-1 overflow-y-auto font-mono text-xs space-y-2.5 scrollbar-thin bg-slate-950 text-slate-100">
                 {logs.map((log, i) => (
-                  <div key={i} className="text-zinc-400 leading-relaxed border-l-2 border-zinc-800/50 pl-3">
-                    <span className="text-indigo-400/90 font-semibold mr-1">[{log.time}]</span> {log.message}
+                  <div key={i} className="text-slate-300 leading-relaxed border-l-2 border-indigo-500/50 pl-3">
+                    <span className="text-indigo-400 font-semibold mr-1">[{log.time}]</span> {log.message}
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
               </div>
             </section>
 
-            <section className="bg-[#131316] border border-zinc-800/80 rounded-xl overflow-hidden shadow-sm flex flex-col h-80">
-              <div className="bg-[#0c0c0e] border-b border-zinc-900/80 px-4 py-3 flex items-center gap-2">
-                <Server className="w-4 h-4 text-zinc-400" />
-                <h3 className="text-sm font-medium text-zinc-200">System Telemetry & Policy</h3>
+            <section className="bg-white dark:bg-[#131316] border border-slate-200 dark:border-zinc-800/80 rounded-xl overflow-hidden shadow-sm flex flex-col h-80 transition-colors">
+              <div className="bg-slate-100 dark:bg-[#0c0c0e] border-b border-slate-200 dark:border-zinc-900/80 px-4 py-3 flex items-center gap-2">
+                <Server className="w-4 h-4 text-slate-600 dark:text-zinc-400" />
+                <h3 className="text-sm font-semibold text-slate-900 dark:text-zinc-200">System Telemetry & Policy</h3>
               </div>
-              <div className="p-5 flex-1 flex flex-col justify-between text-xs text-zinc-400 space-y-3">
+              <div className="p-5 flex-1 flex flex-col justify-between text-xs text-slate-600 dark:text-zinc-400 space-y-3">
                 <div className="space-y-3">
-                  <div className="flex justify-between border-b border-zinc-900/50 pb-2.5">
-                    <span className="text-zinc-400">Registered Agents:</span>
-                    <span className="font-semibold text-indigo-400">17 Agents Active</span>
+                  <div className="flex justify-between border-b border-slate-200 dark:border-zinc-900/50 pb-2.5">
+                    <span className="text-slate-600 dark:text-zinc-400">Registered Agents:</span>
+                    <span className="font-semibold text-indigo-600 dark:text-indigo-400">17 Agents Active</span>
                   </div>
-                  <div className="flex justify-between border-b border-zinc-900/50 py-2.5">
-                    <span className="text-zinc-400">Autonomous Engine:</span>
-                    <span className={`font-semibold ${isAutonomousRunning ? 'text-emerald-400' : 'text-zinc-400'}`}>
+                  <div className="flex justify-between border-b border-slate-200 dark:border-zinc-900/50 py-2.5">
+                    <span className="text-slate-600 dark:text-zinc-400">Autonomous Engine:</span>
+                    <span className={`font-semibold ${isAutonomousRunning ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-600 dark:text-zinc-400'}`}>
                       {isAutonomousRunning ? 'Running (30s Interval)' : 'Paused'}
                     </span>
                   </div>
-                  <div className="flex justify-between border-b border-zinc-900/50 py-2.5">
-                    <span className="text-zinc-400">Target ATS Score Floor:</span>
-                    <span className="font-semibold text-zinc-200">&gt; 90 Target Threshold</span>
+                  <div className="flex justify-between border-b border-slate-200 dark:border-zinc-900/50 py-2.5">
+                    <span className="text-slate-600 dark:text-zinc-400">Target ATS Score Floor:</span>
+                    <span className="font-semibold text-slate-900 dark:text-zinc-200">&gt; 90 Target Threshold</span>
                   </div>
                 </div>
 
-                <div className="bg-[#09090b] p-3 rounded-lg border border-zinc-800/80 text-center">
-                  <div className="text-[10px] text-zinc-500 uppercase font-semibold">Career Health Score</div>
-                  <div className="text-xl font-bold text-emerald-400 mt-1">94 / 100</div>
+                <div className="bg-slate-50 dark:bg-[#09090b] p-3 rounded-lg border border-slate-200 dark:border-zinc-800/80 text-center">
+                  <div className="text-[10px] text-slate-500 dark:text-zinc-500 uppercase font-semibold">Career Health Score</div>
+                  <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">94 / 100</div>
                 </div>
               </div>
             </section>
