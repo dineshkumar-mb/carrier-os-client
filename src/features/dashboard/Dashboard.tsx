@@ -231,7 +231,9 @@ const Dashboard = () => {
 
                 <div className="bg-slate-50 dark:bg-[#09090b] p-3 rounded-lg border border-slate-200 dark:border-zinc-800/80 text-center">
                   <div className="text-[10px] text-slate-500 dark:text-zinc-500 uppercase font-semibold">Career Health Score</div>
-                  <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">94 / 100</div>
+                  <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
+                    {statsLoading ? '...' : `${stats?.careerHealthScore ?? 50} / 100`}
+                  </div>
                 </div>
               </div>
             </section>
