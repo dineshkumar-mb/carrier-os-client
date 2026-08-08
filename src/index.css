@@ -18,6 +18,40 @@ body {
   overflow-x: hidden;
 }
 
+/* Light Theme Overrides */
+html.light-theme body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html.light-theme aside,
+html.light-theme header,
+html.light-theme main {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light-theme .bg-\[\#0c0c0e\],
+html.light-theme .bg-\[\#09090b\],
+html.light-theme .bg-\[\#0a0a0c\],
+html.light-theme .bg-\[\#131316\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light-theme .text-zinc-100,
+html.light-theme .text-zinc-200,
+html.light-theme .text-white {
+  color: #0f172a !important;
+}
+
+html.light-theme .text-zinc-400,
+html.light-theme .text-zinc-500 {
+  color: #64748b !important;
+}
+
 /* Premium Layout & Border Classes */
 .border-premium {
   border-color: rgba(255, 255, 255, 0.08);

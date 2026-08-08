@@ -1,6 +1,7 @@
 import { Outlet, NavLink } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, FileText, Send, User, Settings, Bot, LogOut, Sparkles } from 'lucide-react';
+import { LayoutDashboard, Briefcase, FileText, Send, User, Settings, Bot, LogOut, Sparkles, Sun, Moon, Monitor } from 'lucide-react';
 import { useAuth } from '../features/auth/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const SidebarItem = ({ to, icon: Icon, label }: { to: string, icon: any, label: string }) => (
   <NavLink
@@ -20,6 +21,7 @@ const SidebarItem = ({ to, icon: Icon, label }: { to: string, icon: any, label: 
 
 const Layout = () => {
   const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   
   return (
     <div className="flex h-screen bg-[#09090b] text-zinc-100 overflow-hidden font-sans">
@@ -70,13 +72,52 @@ const Layout = () => {
             <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></div>
             <span className="text-xs text-zinc-400 font-medium">Copilot Agent Online</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <span className="text-xs font-semibold text-zinc-200 block">{user?.name || 'Candidate'}</span>
-              <span className="text-[10px] text-zinc-500 block leading-none">{user?.email}</span>
+
+          {/* Theme Toggle Button & User Profile */}
+          <div className="flex items-center gap-4">
+            {/* Theme Toggle Control (Light / Dark / System) */}
+            <div className="flex items-center gap-1 bg-[#141622] border border-white/10 rounded-xl p-1 shadow-sm">
+              <button
+                type="button"
+                onClick={() => setTheme('light')}
+                title="Light Mode"
+                className={`p-1.5 rounded-lg text-xs transition-all ${
+                  theme === 'light' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Sun className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheme('dark')}
+                title="Dark Mode"
+                className={`p-1.5 rounded-lg text-xs transition-all ${
+                  theme === 'dark' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Moon className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheme('system')}
+                title="System Theme"
+                className={`p-1.5 rounded-lg text-xs transition-all ${
+                  theme === 'system' ? 'bg-indigo-600 text-white shadow-sm font-bold' : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <Monitor className="w-3.5 h-3.5" />
+              </button>
             </div>
-            <div className="w-9 h-9 rounded-full bg-zinc-800 border border-zinc-700/50 flex items-center justify-center text-sm font-bold text-zinc-200">
-              {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}
+
+            {/* Candidate User Name & Avatar */}
+            <div className="flex items-center gap-3 border-l border-white/10 pl-4">
+              <div className="text-right">
+                <span className="text-xs font-semibold text-zinc-200 block">{user?.name || 'Candidate'}</span>
+                <span className="text-[10px] text-zinc-500 block leading-none">{user?.email}</span>
+              </div>
+              <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-500 border border-indigo-400/30 flex items-center justify-center text-sm font-bold text-white shadow-md">
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}
+              </div>
             </div>
           </div>
         </header>
