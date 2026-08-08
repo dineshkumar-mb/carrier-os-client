@@ -19,38 +19,63 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Light Theme Comprehensive Overrides */
+/* Light Theme Comprehensive Master Overrides */
 html.light-theme body {
   background-color: #f8fafc !important;
   color: #0f172a !important;
 }
 
-html.light-theme aside {
+html.light-theme aside,
+html.light-theme header,
+html.light-theme main {
   background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
-html.light-theme header {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-}
-
-html.light-theme main {
-  background-color: #f8fafc !important;
-}
-
+/* Background Panels & Cards in Light Mode */
 html.light-theme .bg-\[\#131316\],
 html.light-theme .bg-\[\#1A1A1A\],
 html.light-theme .bg-\[\#0c0c0e\],
 html.light-theme .bg-\[\#0e1017\],
 html.light-theme .bg-\[\#0a0a0c\],
 html.light-theme .bg-\[\#09090b\],
-html.light-theme .bg-\[\#161824\]\/80 {
+html.light-theme .bg-\[\#161824\],
+html.light-theme .bg-\[\#141622\],
+html.light-theme .bg-\[\#242424\],
+html.light-theme .bg-\[\#131316\]\/30,
+html.light-theme .bg-\[\#131316\]\/60,
+html.light-theme .bg-\[\#09090b\]\/80,
+html.light-theme .bg-\[\#09090b\]\/60,
+html.light-theme .bg-\[\#09090b\]\/40,
+html.light-theme .bg-zinc-800,
+html.light-theme .bg-zinc-800\/50,
+html.light-theme .bg-zinc-800\/80,
+html.light-theme .bg-zinc-900,
+html.light-theme .bg-zinc-950,
+html.light-theme .bg-white\/\[0\.02\],
+html.light-theme .bg-white\/\[0\.03\] {
   background-color: #ffffff !important;
   border-color: #e2e8f0 !important;
   color: #0f172a !important;
 }
 
+/* Borders in Light Mode */
+html.light-theme .border-zinc-700,
+html.light-theme .border-zinc-700\/50,
+html.light-theme .border-zinc-800,
+html.light-theme .border-zinc-800\/80,
+html.light-theme .border-zinc-800\/85,
+html.light-theme .border-zinc-850,
+html.light-theme .border-zinc-900,
+html.light-theme .border-zinc-900\/80,
+html.light-theme .border-zinc-950,
+html.light-theme .border-white\/5,
+html.light-theme .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+/* High-Contrast Text Colors in Light Mode */
 html.light-theme .text-white,
 html.light-theme .text-zinc-100,
 html.light-theme .text-zinc-200 {
@@ -58,28 +83,28 @@ html.light-theme .text-zinc-200 {
 }
 
 html.light-theme .text-zinc-300,
-html.light-theme .text-zinc-400,
-html.light-theme .text-zinc-500 {
-  color: #475569 !important;
+html.light-theme .text-zinc-400 {
+  color: #334155 !important;
 }
 
-html.light-theme .border-zinc-800,
-html.light-theme .border-zinc-900,
-html.light-theme .border-white\/5,
-html.light-theme .border-white\/10 {
-  border-color: #e2e8f0 !important;
+html.light-theme .text-zinc-500,
+html.light-theme .text-zinc-550,
+html.light-theme .text-zinc-600 {
+  color: #64748b !important;
 }
 
-html.light-theme .bg-zinc-800,
-html.light-theme .bg-zinc-900 {
-  background-color: #f1f5f9 !important;
+/* Input & Select Controls in Light Mode */
+html.light-theme input,
+html.light-theme select,
+html.light-theme textarea {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
   color: #0f172a !important;
 }
 
-html.light-theme .bg-white\/\[0\.03\],
-html.light-theme .bg-white\/\[0\.02\] {
-  background-color: #f1f5f9 !important;
-  border-color: #cbd5e1 !important;
+html.light-theme input::placeholder,
+html.light-theme textarea::placeholder {
+  color: #94a3b8 !important;
 }
 
 /* Premium Layout & Border Classes */
