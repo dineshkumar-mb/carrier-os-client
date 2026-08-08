@@ -113,7 +113,6 @@ const Layout = () => {
             <div className="flex items-center gap-3 border-l border-slate-300 dark:border-white/10 pl-4">
               <div className="text-right">
                 <span className="text-xs font-bold text-slate-900 dark:text-zinc-200 block">{user?.name || 'Candidate'}</span>
-                <span className="text-[10px] text-slate-500 dark:text-zinc-500 block leading-none">{user?.email}</span>
               </div>
               <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-500 border border-indigo-400/30 flex items-center justify-center text-sm font-bold text-white shadow-md">
                 {user?.name ? user.name.charAt(0).toUpperCase() : 'C'}

@@ -27,39 +27,39 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const root = document.documentElement;
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    const applyTheme = () => {
-      let resolved: 'dark' | 'light' = 'dark';
+    const updateTheme = () => {
+      let isDark = false;
       if (theme === 'system') {
-        resolved = mediaQuery.matches ? 'dark' : 'light';
+        isDark = mediaQuery.matches;
       } else {
-        resolved = theme;
+        isDark = theme === 'dark';
       }
 
-      setActualTheme(resolved);
+      setActualTheme(isDark ? 'dark' : 'light');
 
-      if (resolved === 'light') {
-        root.classList.remove('dark');
-        root.classList.add('light-theme');
-        document.body.style.backgroundColor = '#f8fafc';
-        document.body.style.color = '#0f172a';
-      } else {
+      if (isDark) {
         root.classList.add('dark');
         root.classList.remove('light-theme');
         document.body.style.backgroundColor = '#09090b';
         document.body.style.color = '#fafafa';
+      } else {
+        root.classList.remove('dark');
+        root.classList.add('light-theme');
+        document.body.style.backgroundColor = '#f8fafc';
+        document.body.style.color = '#0f172a';
       }
     };
 
-    applyTheme();
+    updateTheme();
 
-    const handleSystemChange = () => {
+    const listener = () => {
       if (theme === 'system') {
-        applyTheme();
+        updateTheme();
       }
     };
 
-    mediaQuery.addEventListener('change', handleSystemChange);
-    return () => mediaQuery.removeEventListener('change', handleSystemChange);
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
   }, [theme]);
 
   return (

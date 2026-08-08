@@ -196,10 +196,10 @@ const Dashboard = () => {
                   </span>
                 </div>
               </div>
-              <div className="p-4 flex-1 overflow-y-auto font-mono text-xs space-y-2.5 scrollbar-thin bg-slate-950 text-slate-100">
+              <div className="p-4 flex-1 overflow-y-auto font-mono text-xs space-y-2.5 scrollbar-thin bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 border-t border-slate-200 dark:border-zinc-900/80 transition-colors">
                 {logs.map((log, i) => (
-                  <div key={i} className="text-slate-300 leading-relaxed border-l-2 border-indigo-500/50 pl-3">
-                    <span className="text-indigo-400 font-semibold mr-1">[{log.time}]</span> {log.message}
+                  <div key={i} className="text-slate-700 dark:text-slate-300 leading-relaxed border-l-2 border-indigo-500/50 pl-3">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold mr-1">[{log.time}]</span> {log.message}
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
