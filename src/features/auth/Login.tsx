@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from './AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Loader2, Eye, EyeOff, Mail, Lock, User, ShieldCheck, CheckCircle2, Zap, Rocket, Star, ArrowRight, Server, Info } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Mail, Lock, User, ShieldCheck, CheckCircle2, Zap, Rocket, ArrowRight, Server, Info } from 'lucide-react';
 
 import api from '../../services/api';
 import authBg from '../../assets/auth_bg.png';
@@ -86,28 +86,28 @@ export default function Login() {
           {/* Main Title & Subtitle */}
           <div className="space-y-3">
             <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
-              Land Your Dream Job with <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">17 Autonomous AI Agents</span>
+              Automate Your Career Search with <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">17 Autonomous AI Agents</span>
             </h1>
             <p className="text-sm text-zinc-300 leading-relaxed">
-              Carrier OS automates job board scanning, JD-specific resume tailoring, ATS optimization, and recruiter email tracking completely hands-free.
+              Carrier OS scans global job portals, tailors JD-specific resumes, computes ATS match fit scores, and correlates recruiter email screeners.
             </p>
           </div>
 
-          {/* Social Proof / Live Platform Metrics */}
+          {/* Factual System Capabilities & Architecture Metrics */}
           <div className="grid grid-cols-3 gap-3 p-4 bg-[#0e1017]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-xl">
             <div className="flex flex-col">
               <span className="text-xl font-bold text-white flex items-center gap-1">
-                14,200+ <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
+                17 <Zap className="w-4 h-4 text-indigo-400" />
               </span>
-              <span className="text-[11px] text-zinc-400 font-medium">Jobs Scanned Daily</span>
+              <span className="text-[11px] text-zinc-400 font-medium">Autonomous Agents</span>
             </div>
             <div className="flex flex-col border-l border-white/10 pl-3">
-              <span className="text-xl font-bold text-emerald-400">98.4%</span>
-              <span className="text-[11px] text-zinc-400 font-medium">ATS Pass Rate</span>
+              <span className="text-xl font-bold text-emerald-400">100%</span>
+              <span className="text-[11px] text-zinc-400 font-medium">Truthful Evidence Mapping</span>
             </div>
             <div className="flex flex-col border-l border-white/10 pl-3">
               <span className="text-xl font-bold text-cyan-400">$0</span>
-              <span className="text-[11px] text-zinc-400 font-medium">Always Free Plan</span>
+              <span className="text-[11px] text-zinc-400 font-medium">Open Source Free Tier</span>
             </div>
           </div>
 
@@ -117,33 +117,27 @@ export default function Login() {
               <div className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
               </div>
-              <span><strong>Unlimited Job Scans</strong> across Greenhouse, Lever, Workday & 10+ career portals.</span>
+              <span><strong>Multi-Portal Job Discovery</strong> across Greenhouse, Lever, Workday, Naukri & Remote platforms.</span>
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-200">
               <div className="w-5 h-5 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400" />
               </div>
-              <span><strong>Truthful Resume Tailoring</strong> with zero hallucinated metrics or fake skills.</span>
+              <span><strong>Evidence-Backed Resume Tailoring</strong> with zero hallucinated metrics or unverified skills.</span>
             </div>
             <div className="flex items-center gap-3 text-xs text-zinc-200">
               <div className="w-5 h-5 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center shrink-0">
                 <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
               </div>
-              <span><strong>Live Recruiter Email Sync</strong> to capture interview screeners automatically.</span>
+              <span><strong>Live Gmail Recruiter Sync</strong> to capture interview screeners and application updates automatically.</span>
             </div>
           </div>
 
-          {/* Testimonial Quote */}
+          {/* Factual Architectural Guarantee */}
           <div className="p-3.5 bg-white/[0.02] border border-white/5 rounded-xl flex items-center gap-3">
-            <div className="flex text-amber-400 shrink-0">
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-              <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            </div>
-            <p className="text-[11px] text-zinc-300 italic">
-              "Landed 3 interview screeners in my first 48 hours using Carrier OS Free Tier."
+            <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <p className="text-[11px] text-zinc-300">
+              <strong>Architectural Guarantee:</strong> Zero-hallucination evidence mapping, immutable multi-tenant security isolation, and candidate human approval sign-off.
             </p>
           </div>
         </div>
