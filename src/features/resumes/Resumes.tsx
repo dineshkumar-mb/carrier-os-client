@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getResumes, saveResume, parseResumeFile, default as api } from '../../services/api';
+import { ResumesSkeleton } from '../../components/Skeleton';
 import { FileText, Loader2, Plus, Trash2, CheckCircle2, ChevronDown, ChevronUp, Upload, AlertCircle, Sparkles, Wand2 } from 'lucide-react';
 
 interface ExperienceItem {
@@ -178,12 +179,7 @@ export default function Resumes() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
-        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-        <span className="text-zinc-400 text-sm">Loading resume models...</span>
-      </div>
-    );
+    return <ResumesSkeleton />;
   }
 
   return (

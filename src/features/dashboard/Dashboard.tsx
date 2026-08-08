@@ -3,6 +3,7 @@ import { Briefcase, Activity, Crosshair, Terminal, TrendingUp, Cpu, Server, Shie
 import { io, Socket } from 'socket.io-client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDashboardStats, getObservabilityStats } from '../../services/api';
+import { DashboardSkeleton } from '../../components/Skeleton';
 import StatCard from '../../components/StatCard';
 import HumanApprovalCenter from './HumanApprovalCenter';
 import SkillGraphView from './SkillGraphView';
@@ -166,6 +167,9 @@ const Dashboard = () => {
       {activeTab === 'market' && <MarketIntelligenceView />}
 
       {activeTab === 'overview' && (
+        statsLoading ? (
+          <DashboardSkeleton />
+        ) : (
         <div className="flex flex-col gap-6">
           {/* Main Metrics Grid */}
           <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -231,6 +235,7 @@ const Dashboard = () => {
             </section>
           </div>
         </div>
+        )
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getApplications, triggerAutoApply } from '../../services/api';
+import { ApplicationsSkeleton } from '../../components/Skeleton';
 import { io } from 'socket.io-client';
 import { Send, Loader2, Play, Calendar, AlertCircle, Clock, CheckSquare, Award, ChevronDown, ChevronUp, Plus, Filter, Mail, RefreshCw } from 'lucide-react';
 import api, { API_SERVER_URL } from '../../services/api';
@@ -225,7 +226,7 @@ export default function Applications() {
           </div>
 
           {appsLoading ? (
-            <div className="flex items-center justify-center p-12"><Loader2 className="w-6 h-6 animate-spin text-indigo-500" /></div>
+            <ApplicationsSkeleton />
           ) : filteredApps.length === 0 ? (
             <div className="text-zinc-550 py-16 flex flex-col items-center justify-center border border-dashed border-zinc-800 rounded-xl gap-3 bg-[#131316]/30">
               <Send className="w-8 h-8 text-zinc-700" />

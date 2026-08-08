@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { ExternalLink, Bot, Zap, Loader2, AlertCircle, Search, Filter, ArrowUpDown, ShieldCheck, HelpCircle, X, Layers, CheckSquare, Square } from 'lucide-react';
 import { getJobs, createApplication, triggerAutoApply, scanJobs } from '../../services/api';
+import { JobsSkeleton } from '../../components/Skeleton';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
@@ -180,12 +181,7 @@ const Jobs = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] gap-3">
-        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-        <span className="text-zinc-400 text-sm font-medium">Mapping active jobs...</span>
-      </div>
-    );
+    return <JobsSkeleton />;
   }
 
   return (
