@@ -135,7 +135,14 @@ const Jobs = () => {
 
     // 2. Source / Job Board Filter
     if (sourceFilter !== 'all') {
-      result = result.filter(j => j.source && j.source.toLowerCase() === sourceFilter.toLowerCase());
+      const sf = sourceFilter.toLowerCase();
+      result = result.filter(j =>
+        j.source && (
+          j.source.toLowerCase() === sf ||
+          j.source.toLowerCase().includes(sf) ||
+          sf.includes(j.source.toLowerCase())
+        )
+      );
     }
 
     // 3. Location Filter with Smart Remote Inclusion
