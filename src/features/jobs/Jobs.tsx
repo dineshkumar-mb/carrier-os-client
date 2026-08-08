@@ -84,9 +84,22 @@ const Jobs = () => {
     fetchJobs();
   }, []);
 
-  // Dynamically extract unique job sources and top locations from loaded jobs
+  // Dynamically extract unique job sources and pre-populate all supported platform portals
   const availableSources = useMemo(() => {
-    const sources = new Set<string>();
+    const ALL_SUPPORTED_PORTALS = [
+      'LinkedIn',
+      'Naukri',
+      'Apna',
+      'Greenhouse',
+      'Lever',
+      'Internshala',
+      'RemoteOK',
+      'Remotive',
+      'Himalayas',
+      'WeWorkRemotely',
+      'ArbeitNow'
+    ];
+    const sources = new Set<string>(ALL_SUPPORTED_PORTALS);
     jobs.forEach(j => { if (j.source) sources.add(j.source); });
     return Array.from(sources).sort();
   }, [jobs]);
