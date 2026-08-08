@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { TrendingUp, DollarSign, Flame, Loader2, Building2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../services/api';
 
 interface TrendingSkill {
   name: string;
@@ -29,7 +29,7 @@ const MarketIntelligenceView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/market/intelligence')
+    api.get('/market/intelligence')
       .then(res => {
         if (res.data?.data) {
           const rawSkills = res.data.data.trendingSkills || [];

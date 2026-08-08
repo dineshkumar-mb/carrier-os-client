@@ -1,8 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMe, updateMe } from '../../services/api';
+import api, { getMe, updateMe } from '../../services/api';
 import { Loader2, Mail, Send, CheckCircle2, Sliders, ShieldCheck } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 
 export default function Settings() {
   const queryClient = useQueryClient();
@@ -19,7 +18,7 @@ export default function Settings() {
   const [policySaving, setPolicySaving] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/policy/config')
+    api.get('/policy/config')
       .then(res => {
         if (res.data?.data) {
           setPolicyMode(res.data.data.mode || 'Assisted');
@@ -53,7 +52,8 @@ export default function Settings() {
   const handleSavePolicy = async () => {
     try {
       setPolicySaving(true);
-      await axios.put('http://localhost:3000/api/policy/config', {
+      setSuccessMsg('');
+      await api.put('/policy/config', {
         mode: policyMode,
         minSalaryTarget: minSalary,
         atsScoreThreshold: atsThreshold,

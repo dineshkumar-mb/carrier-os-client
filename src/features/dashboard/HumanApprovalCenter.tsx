@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, FileText, ShieldAlert, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../services/api';
 
 export interface ApprovalItem {
   id: string;
@@ -25,7 +25,7 @@ const HumanApprovalCenter = () => {
 
   const fetchQueue = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/api/approval/queue');
+      const res = await api.get('/approval/queue');
       if (res.data?.data) {
         setItems(res.data.data);
         if (res.data.data.length > 0 && !selectedItem) {
@@ -47,7 +47,7 @@ const HumanApprovalCenter = () => {
     try {
       setActionProcessingId(id);
       setMessage('');
-      const res = await axios.post(`http://localhost:3000/api/approval/${id}/action`, { action });
+      const res = await api.post(`/approval/${id}/action`, { action });
 
       setMessage(res.data?.message || `Item ${action === 'approve' ? 'Approved & Submitted' : 'Rejected'}`);
 

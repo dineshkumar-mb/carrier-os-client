@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getResumes, saveResume, parseResumeFile } from '../../services/api';
+import { getResumes, saveResume, parseResumeFile, default as api } from '../../services/api';
 import { FileText, Loader2, Plus, Trash2, CheckCircle2, ChevronDown, ChevronUp, Upload, AlertCircle, Sparkles, Wand2 } from 'lucide-react';
-import axios from 'axios';
 
 interface ExperienceItem {
   role: string;
@@ -121,7 +120,7 @@ export default function Resumes() {
   const handleGenerateTailored = async () => {
     try {
       setIsTailoring(true);
-      await axios.post('http://localhost:3000/api/resumes/tailor', {
+      await api.post('/resumes/tailor', {
         targetRole,
         companyName: targetCompany,
         variantType

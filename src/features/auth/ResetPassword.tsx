@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
+
+import api from '../../services/api';
 
 export default function ResetPassword() {
   const { token } = useParams<{ token: string }>();
@@ -24,7 +25,7 @@ export default function ResetPassword() {
     setError('');
 
     try {
-      await axios.post(`http://localhost:3000/api/auth/reset-password/${token}`, { password });
+      await api.post(`/auth/reset-password/${token}`, { password });
       navigate('/login');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Failed to reset password');

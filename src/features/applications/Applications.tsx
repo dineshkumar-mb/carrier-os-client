@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getApplications, triggerAutoApply } from '../../services/api';
 import { io } from 'socket.io-client';
 import { Send, Loader2, Play, Calendar, AlertCircle, Clock, CheckSquare, Award, ChevronDown, ChevronUp, Plus, Filter, Mail, RefreshCw } from 'lucide-react';
-import axios from 'axios';
+import api, { API_SERVER_URL } from '../../services/api';
 
 interface TimelineEvent {
   status: string;
@@ -59,7 +59,7 @@ export default function Applications() {
   const fetchEmails = async () => {
     try {
       setEmailsLoading(true);
-      const res = await axios.get('http://localhost:3000/api/inbox');
+      const res = await api.get('/inbox');
       if (res.data) setEmails(res.data);
     } catch (err) {
       console.error('Error fetching emails:', err);
@@ -75,7 +75,7 @@ export default function Applications() {
   }, [activeSubTab]);
 
   useEffect(() => {
-    const socket = io('http://localhost:3000');
+    const socket = io(API_SERVER_URL);
 
     socket.on('live-activity', (message: string) => {
       if (message.includes('Worker') || message.includes('application') || message.includes('Applied') || message.includes('Email') || message.includes('Inbox')) {
@@ -105,7 +105,7 @@ export default function Applications() {
     e.preventDefault();
     try {
       setUpdatingAppId(appId);
-      await axios.patch(`http://localhost:3000/api/applications/${appId}`, {
+      await api.patch(`/applications/${appId}`, {
         status: newStatus,
         note: newNote
       });
@@ -123,7 +123,7 @@ export default function Applications() {
   const handleScanInbox = async () => {
     try {
       setScanningInbox(true);
-      const res = await axios.post('http://localhost:3000/api/inbox/scan');
+      const res = await api.post('/inbox/scan');
       setSuccessMsg(res.data?.message || 'Inbox scanned.');
       fetchEmails();
       queryClient.invalidateQueries({ queryKey: ['applications'] });

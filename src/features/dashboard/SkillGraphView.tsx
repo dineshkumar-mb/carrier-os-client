@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Cpu, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../services/api';
 
 interface SkillNode {
   id: string;
@@ -17,7 +17,7 @@ const SkillGraphView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/analytics/skill-graph')
+    api.get('/analytics/skill-graph')
       .then(res => {
         if (res.data?.data?.nodes) {
           setNodes(Object.values(res.data.data.nodes));

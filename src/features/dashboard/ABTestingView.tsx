@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Activity, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import api from '../../services/api';
 
 interface Variant {
   variantId: string;
@@ -18,7 +18,7 @@ const ABTestingView = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/analytics/ab-testing')
+    api.get('/analytics/ab-testing')
       .then(res => {
         if (res.data?.data) {
           setVariants(res.data.data);

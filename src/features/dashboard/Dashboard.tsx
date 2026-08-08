@@ -8,7 +8,7 @@ import HumanApprovalCenter from './HumanApprovalCenter';
 import SkillGraphView from './SkillGraphView';
 import ABTestingView from './ABTestingView';
 import MarketIntelligenceView from './MarketIntelligenceView';
-import axios from 'axios';
+import api, { API_SERVER_URL } from '../../services/api';
 
 type TabType = 'overview' | 'approval' | 'skill_graph' | 'ab_testing' | 'market';
 
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Fetch initial autonomous engine status
-    axios.get('http://localhost:3000/api/autonomous/status')
+    api.get('/autonomous/status')
       .then(res => {
         if (res.data?.data) {
           setIsAutonomousRunning(res.data.data.isRunning);
@@ -43,7 +43,7 @@ const Dashboard = () => {
       })
       .catch(() => {});
 
-    const socket: Socket = io('http://localhost:3000');
+    const socket: Socket = io(API_SERVER_URL);
 
     socket.on('live-activity', (message: string) => {
       const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -63,7 +63,7 @@ const Dashboard = () => {
     try {
       const nextState = !isAutonomousRunning;
       setIsAutonomousRunning(nextState);
-      await axios.post('http://localhost:3000/api/autonomous/toggle', { enable: nextState, intervalMs: 30000 });
+      await api.post('/autonomous/toggle', { enable: nextState, intervalMs: 30000 });
     } catch (err) {
       console.error('Failed to toggle autonomous loop:', err);
     }
@@ -72,7 +72,7 @@ const Dashboard = () => {
   const triggerCycleNow = async () => {
     try {
       setIsExecutingCycle(true);
-      await axios.post('http://localhost:3000/api/autonomous/run-cycle');
+      await api.post('/autonomous/run-cycle');
       queryClient.invalidateQueries({ queryKey: ['dashboard-stats'] });
     } catch (err) {
       console.error('Failed to trigger autonomous cycle:', err);

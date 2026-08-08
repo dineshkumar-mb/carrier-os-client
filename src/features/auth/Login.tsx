@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from './AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import { Loader2, Eye, EyeOff } from 'lucide-react';
+
+import api from '../../services/api';
 
 export default function Login() {
   const [name, setName] = useState('');
@@ -22,10 +23,10 @@ export default function Login() {
     setError('');
 
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const endpoint = isLogin ? '/auth/login' : '/auth/register';
       const payload = isLogin ? { email, password } : { email, password, name: name || email.split('@')[0] };
       
-      const response = await axios.post(`http://localhost:3000${endpoint}`, payload);
+      const response = await api.post(endpoint, payload);
       login(response.data.token, response.data.user);
       navigate('/');
     } catch (err: any) {

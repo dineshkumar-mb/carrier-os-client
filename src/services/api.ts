@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const RAW_BASE_URL = import.meta.env.VITE_API_URL || 'https://carrier-os-server.vercel.app';
+export const API_SERVER_URL = RAW_BASE_URL.replace(/\/api\/?$/, '');
+export const API_BASE_URL = `${API_SERVER_URL}/api`;
+
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
