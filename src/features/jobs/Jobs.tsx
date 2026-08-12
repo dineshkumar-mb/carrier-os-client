@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
-import { ExternalLink, Bot, Zap, Loader2, AlertCircle, Search, Filter, ArrowUpDown, ShieldCheck, HelpCircle, X, Layers, CheckSquare, Square } from 'lucide-react';
-import { getJobs, createApplication, triggerAutoApply, scanJobs } from '../../services/api';
+import { ExternalLink, Bot, Zap, Loader2, AlertCircle, Search, Filter, ArrowUpDown, ShieldCheck, HelpCircle, X, Layers, CheckSquare, Square, Info, Plus } from 'lucide-react';
+import { getJobs, createApplication, triggerAutoApply, scanJobs, importJob } from '../../services/api';
 import { JobsSkeleton } from '../../components/Skeleton';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -40,6 +40,38 @@ const Jobs = () => {
   const [sourceFilter, setSourceFilter] = useState('all');
   const [includeRemote, setIncludeRemote] = useState(true);
   const [sortBy, setSortBy] = useState('match'); // 'match' | 'newest' | 'company'
+
+  // User Job Import Modal state
+  const [showImportModal, setShowImportModal] = useState(false);
+  const [importUrl, setImportUrl] = useState('');
+  const [importTitle, setImportTitle] = useState('');
+  const [importCompany, setImportCompany] = useState('');
+  const [importDescription, setImportDescription] = useState('');
+  const [importing, setImporting] = useState(false);
+
+  const handleImportJob = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!importUrl && !importDescription) return;
+    setImporting(true);
+    try {
+      await importJob({
+        jobUrl: importUrl,
+        jobTitle: importTitle,
+        companyName: importCompany,
+        jobDescription: importDescription
+      });
+      setShowImportModal(false);
+      setImportUrl('');
+      setImportTitle('');
+      setImportCompany('');
+      setImportDescription('');
+      getJobs().then(setJobs);
+    } catch (err) {
+      console.error('Import error:', err);
+    } finally {
+      setImporting(false);
+    }
+  };
 
   const scanMutation = useMutation({
     mutationFn: scanJobs,
@@ -87,7 +119,6 @@ const Jobs = () => {
   // Dynamically extract unique job sources and pre-populate all supported platform portals
   const availableSources = useMemo(() => {
     const ALL_SUPPORTED_PORTALS = [
-      'LinkedIn',
       'Naukri',
       'Apna',
       'Greenhouse',
@@ -220,19 +251,50 @@ const Jobs = () => {
           </div>
           <p className="text-zinc-400 mt-1 text-sm">Proactively matching and ranking live opportunities for your profile.</p>
         </div>
-        <button
-          onClick={() => scanMutation.mutate()}
-          disabled={scanMutation.isPending}
-          className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center transition-all duration-200 shadow-lg shadow-indigo-500/10 active:scale-95 cursor-pointer shrink-0"
-        >
-          {scanMutation.isPending ? (
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-          ) : (
-            <Zap className="w-4 h-4 mr-2" />
-          )}
-          {scanMutation.isPending ? 'Crawling Job Boards...' : 'Scan for Jobs'}
-        </button>
+        <div className="flex items-center gap-3 shrink-0">
+          <button
+            onClick={() => setShowImportModal(true)}
+            className="bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 border border-slate-300 dark:border-zinc-700 px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center gap-2 transition-all cursor-pointer shadow-sm"
+          >
+            <Plus className="w-4 h-4 text-indigo-500" />
+            Import Job URL / Description
+          </button>
+          <button
+            onClick={() => scanMutation.mutate()}
+            disabled={scanMutation.isPending}
+            className="bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center transition-all duration-200 shadow-lg shadow-indigo-500/10 active:scale-95 cursor-pointer shrink-0"
+          >
+            {scanMutation.isPending ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Zap className="w-4 h-4 mr-2" />
+            )}
+            {scanMutation.isPending ? 'Crawling Job Boards...' : 'Scan for Jobs'}
+          </button>
+        </div>
       </header>
+
+      {/* Restricted Source Information Banner */}
+      {['naukri', 'apna', 'internshala'].includes(sourceFilter.toLowerCase()) && (
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 text-amber-300 text-xs flex items-start gap-3 animate-in fade-in duration-200">
+          <Info className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div className="space-y-1">
+            <div className="font-bold text-amber-200 text-sm">Source unavailable for automatic discovery.</div>
+            <div className="text-amber-300/90 leading-relaxed">
+              Carrier OS enforces a legitimate open-source plugin architecture with no unauthorized scraping for platform compliance.
+            </div>
+            <div className="pt-2 text-[11px] text-amber-200 font-medium">
+              <strong>Available alternatives:</strong>
+              <ul className="list-disc pl-4 mt-1 space-y-0.5 text-amber-300/90">
+                <li>Authorized integration / Official API</li>
+                <li>Import Job URL (`+ Import Job URL / Description` button above)</li>
+                <li>Paste job description text</li>
+                <li>Upload job description document</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
 
       {scanError && (
         <div className="bg-rose-500/10 border border-rose-500/20 text-rose-400 px-4 py-3 rounded-lg flex items-center gap-2 text-sm max-w-4xl">
@@ -509,6 +571,98 @@ const Jobs = () => {
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {/* Import Job Modal Dialog */}
+      {showImportModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div className="flex items-center gap-2 text-white font-bold text-lg">
+                <Plus className="w-5 h-5 text-indigo-400" />
+                Import Custom Job / URL
+              </div>
+              <button
+                onClick={() => setShowImportModal(false)}
+                className="text-slate-400 hover:text-white transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleImportJob} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Job URL (Naukri, Apna, Internshala, LinkedIn, or Company Site)
+                </label>
+                <input
+                  type="url"
+                  placeholder="https://..."
+                  value={importUrl}
+                  onChange={(e) => setImportUrl(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Job Title (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Senior Full Stack Engineer"
+                    value={importTitle}
+                    onChange={(e) => setImportTitle(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-slate-300 mb-1">
+                    Company Name (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Swiggy"
+                    value={importCompany}
+                    onChange={(e) => setImportCompany(e.target.value)}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                  Paste Job Description (Recommended for Restricted Sources)
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Paste raw JD text from Naukri, Apna, Internshala, or email..."
+                  value={importDescription}
+                  onChange={(e) => setImportDescription(e.target.value)}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowImportModal(false)}
+                  className="px-4 py-2 text-sm font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={importing || (!importUrl && !importDescription)}
+                  className="bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white px-5 py-2 rounded-lg text-sm font-bold transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-indigo-500/20"
+                >
+                  {importing && <Loader2 className="w-4 h-4 animate-spin" />}
+                  {importing ? 'Processing...' : 'Evaluate & Add Job'}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </div>

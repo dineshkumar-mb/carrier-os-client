@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Briefcase, Activity, Crosshair, Terminal, TrendingUp, Cpu, Server, ShieldAlert, Layers, Play, Pause, RefreshCw, Zap } from 'lucide-react';
+import { Briefcase, Activity, Crosshair, Terminal, TrendingUp, Cpu, Server, ShieldAlert, ShieldCheck, Layers, Play, Pause, RefreshCw, Zap } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDashboardStats, getObservabilityStats } from '../../services/api';
@@ -9,9 +9,11 @@ import HumanApprovalCenter from './HumanApprovalCenter';
 import SkillGraphView from './SkillGraphView';
 import ABTestingView from './ABTestingView';
 import MarketIntelligenceView from './MarketIntelligenceView';
+import JobAuthenticityView from './JobAuthenticityView';
+import JobVerificationApprovalCenter from './JobVerificationApprovalCenter';
 import api, { API_SERVER_URL } from '../../services/api';
 
-type TabType = 'overview' | 'approval' | 'skill_graph' | 'ab_testing' | 'market';
+type TabType = 'overview' | 'authenticity' | 'verification_approval' | 'approval' | 'skill_graph' | 'ab_testing' | 'market';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
@@ -135,10 +137,12 @@ const Dashboard = () => {
       </header>
 
       {/* Feature Tabs */}
-      <div className="flex gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3">
+      <div className="flex gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3 flex-wrap">
         {[
           { id: 'overview', label: 'Overview', icon: Briefcase },
-          { id: 'approval', label: 'Human Approval', icon: ShieldAlert },
+          { id: 'authenticity', label: 'Job Trust & Verification', icon: ShieldCheck },
+          { id: 'verification_approval', label: 'Verification Sign-off', icon: ShieldAlert },
+          { id: 'approval', label: 'Human Application Sign-off', icon: ShieldAlert },
           { id: 'skill_graph', label: 'Skill Graph', icon: Layers },
           { id: 'ab_testing', label: 'A/B Testing', icon: Activity },
           { id: 'market', label: 'Job Market', icon: TrendingUp }
@@ -163,6 +167,8 @@ const Dashboard = () => {
       </div>
 
       {/* Main Tab Rendering */}
+      {activeTab === 'authenticity' && <JobAuthenticityView />}
+      {activeTab === 'verification_approval' && <JobVerificationApprovalCenter />}
       {activeTab === 'approval' && <HumanApprovalCenter />}
       {activeTab === 'skill_graph' && <SkillGraphView />}
       {activeTab === 'ab_testing' && <ABTestingView />}

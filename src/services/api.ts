@@ -115,4 +115,14 @@ export const getExecutionTraces = async () => {
   return response.data;
 };
 
+export const importJob = async (data: { jobUrl?: string; jobTitle?: string; companyName?: string; jobDescription?: string; sourcePlatform?: string }) => {
+  const response = await api.post('/jobs/import', data);
+  return response.data;
+};
+
+export const getJobSourcesHealth = async () => {
+  const response = await api.get('/jobs/sources/health');
+  return response.data;
+};
+
 export default api;
